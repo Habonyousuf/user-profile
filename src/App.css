@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+
+}
+
+header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+main {
+  padding: 20px;
+}
+
+footer {
+  background-color: #282c34;
+  padding: 10px;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Profile Styles */
+#profile {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  #profile {
+    padding: 15px;
+  }
+
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  #profile {
+    padding: 10px;
+  }
+
+  .profile-picture {
+    width: 100px;
+    height: 100px;
+  }
+}
