@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import './App.css'; 
+import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch user data from the mock API
-    fetch('/user.json')
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Failed to fetch user data');
         }
-        return response.json();
-      })
-      .then((data) => {
-        setUser(data);
+        const data = await response.json();
+        
+        setUser({
+          name: data.name,
+          email: data.email,
+          profilePicture: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`,
+          bio: `Works at ${data.company.name}. Lives in ${data.address.city}.`,
+          phone: data.phone,
+          website: data.website
+        });
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching user data:', error);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -31,24 +40,29 @@ function App() {
       </header>
       <main>
         {loading ? (
-          <p>Loading user profile...</p>
+          <div className="loader">Loading...</div>
+        ) : error ? (
+          <div className="error">Error: {error}</div>
         ) : (
-          <div id="profile">
-            <img
-              src={user.profilePicture}
-              alt={`${user.name}'s profile`}
-              className="profile-picture"
+          <div className="profile-card">
+            <img 
+              src={user.profilePicture} 
+              alt={user.name} 
+              className="profile-img"
             />
             <h2>{user.name}</h2>
-            <p>{user.bio}</p>
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
+            <p className="bio">{user.bio}</p>
+            
+            <div className="contact-info">
+              <p><span>📧</span> {user.email}</p>
+              <p><span>📱</span> {user.phone}</p>
+              <p><span>🌐</span> {user.website}</p>
+            </div>
           </div>
         )}
       </main>
       <footer>
-        <p>&copy; 2025  &nbsp;User Profile App</p>
+        <p>&copy; 2025 User Profile App</p>
       </footer>
     </div>
   );
