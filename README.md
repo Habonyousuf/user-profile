@@ -10,9 +10,9 @@ A React application that fetches and displays user profile data from JSONPlaceho
 
 ## Technologies Used
 
-- React 18
+- React 
 - Fetch API
-- CSS3 (with media queries)
+- CSS (with media queries)
 - JSONPlaceholder (mock API)
 
 
